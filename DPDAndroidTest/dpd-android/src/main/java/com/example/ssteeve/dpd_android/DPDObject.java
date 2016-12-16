@@ -21,8 +21,8 @@ public class DPDObject {
 
     @JsonProperty("id")
     public String objectId = null;
-    public Integer createdAt = null;
-    public Integer updatedAt = null;
+    public Long createdAt = null;
+    public Long updatedAt = null;
 
     public String getObjectId() {
         return objectId;
@@ -32,19 +32,19 @@ public class DPDObject {
         this.objectId = objectId;
     }
 
-    public Integer getCreatedAt() {
+    public Long getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(Long createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Integer getUpdatedAt() {
+    public Long getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Integer updatedAt) {
+    public void setUpdatedAt(Long updatedAt) {
         this.updatedAt = updatedAt;
     }
 
