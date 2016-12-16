@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.ssteeve.dpd_android.DPDObject;
+import com.example.ssteeve.dpd_android.DPDQuery;
 import com.example.ssteeve.dpd_android.DPDUser;
 import com.example.ssteeve.dpd_android.MappableResponseCallBack;
+import com.example.ssteeve.dpd_android.QueryCondition;
 
 import org.json.JSONException;
 
@@ -25,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        login();
+        //login();
+
+        loadStroe();
     }
 
     void login() {
@@ -47,6 +51,22 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    void loadStroe() {
+        DPDQuery query = new DPDQuery(QueryCondition.EQUAL, null, null, null, "name", "Best Buy", null);
+        query.findMappableObject("store", Store.class, new MappableResponseCallBack() {
+            @Override
+            public void onResponse(List<DPDObject> response) {
+                Log.d(this.getClass().getSimpleName(), "response");
+            }
+
+            @Override
+            public void onFailure(Call call, Response response, Exception e) {
+                Log.d(this.getClass().getSimpleName(), "error occured");
+            }
+
+        });
     }
 
 }

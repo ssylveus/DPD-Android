@@ -32,9 +32,9 @@ public class DPDRequest {
                             @Nullable Class mappableObject, RequestCallBack requestCallBack) {
 
         String url = DPDConstants.sRootUrl + endpoint;
-        if (params != null) {
+        if (params != null && params.size() > 0) {
             String paramString = new JSONObject(params).toString();
-            url = DPDConstants.sRootUrl + "?" + paramString;
+            url = url + "?" + paramString;
         }
 
 

@@ -14,6 +14,6 @@ public class DPDAplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DPDClient.newInstance(getApplicationContext(), "https://usicians.com/");
+        DPDClient.newInstance(getApplicationContext(), "http://10.0.0.90:2403/");
     }
 }
