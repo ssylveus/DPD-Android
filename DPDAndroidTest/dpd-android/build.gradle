@@ -6,26 +6,6 @@ plugins {
     id "com.jfrog.bintray" version "1.7.3"
 }
 
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = 'ssylveus'
-    key = '444ca5ec2e07e8a82c7998780d3b5f9db2790b3f'
-
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "DPD-Android"
-        websiteUrl = 'https://github.com/ssylveus/DPD-Android'
-        vcsUrl = 'https://github.com/ssylveus/DPD-Android.git'
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
-}
-
-
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
