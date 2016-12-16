@@ -12,19 +12,19 @@ apply plugin: 'com.jfrog.bintray'
 
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'dpd-android'
+    bintrayRepo = 'DPD-Android'
+    bintrayName = 'DPD-Android'
 
     publishedGroupId = 'com.ssylveus.dpd-android'
     libraryName = 'DPD-Android'
-    artifact = 'deployd android sdk'
+    artifact = 'deployd-android-sdk'
 
     libraryDescription = 'A wrapper for communicating with deployd on Android'
 
     siteUrl = 'https://github.com/ssylveus/DPD-Android'
     gitUrl = 'https://github.com/ssylveus/DPD-Android.git'
 
-    libraryVersion = '0.90.0'
+    libraryVersion = '0.90.1'
 
     developerId = 'ssylveus'
     developerName = 'Steeven Sylveus'
