@@ -1,4 +1,45 @@
+plugins {
+    id "com.github.dcendents.android-maven" version "1.5"
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+}
+
+bintray {
+    user = 'ssylveus'
+    key = '444ca5ec2e07e8a82c7998780d3b5f9db2790b3f'
+}
+
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'dpd-android'
+
+    publishedGroupId = 'com.ssylveus.dpd-android'
+    libraryName = 'DPD-Android'
+    artifact = 'deployd android sdk'
+
+    libraryDescription = 'A wrapper for communicating with deployd on Android'
+
+    siteUrl = 'https://github.com/ssylveus/DPD-Android'
+    gitUrl = 'https://github.com/ssylveus/DPD-Android.git'
+
+    libraryVersion = '0.9.3'
+
+    developerId = 'ssylveus'
+    developerName = 'Steeven Sylveus'
+    developerEmail = 'steevensylveus@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
 
 android {
     compileSdkVersion 25
@@ -22,6 +63,7 @@ android {
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -37,3 +79,6 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
