@@ -2,6 +2,7 @@ package com.example.ssteeve.dpd_android;
 
 import android.support.annotation.Nullable;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +63,12 @@ public class DPDQuery {
                 } else {
                     arrayValue = jsonString;
                 }
-                callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                try {
+                    callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    callBack.onFailure(null, null, e);
+                }
             }
 
             @Override

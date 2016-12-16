@@ -3,6 +3,7 @@ package com.example.ssteeve.dpd_android;
 import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
@@ -18,6 +19,8 @@ import okhttp3.Response;
 /**
  * Created by ssteeve on 11/2/16.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DPDObject {
 
     @JsonProperty("id")
@@ -61,16 +64,16 @@ public class DPDObject {
         return jsonString;
     }
 
-    public static List<DPDObject> convertToMNObject(String jsonString, final Class<DPDObject> mappableObject) {
+    public static List<DPDObject> convertToMNObject(String jsonString, final Class<DPDObject> mappableObject) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, mappableObject);
             return mapper.readValue(jsonString, type);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new IOException(e);
         }
 
-        return null;
     }
 
     public void createObject(String endPoint, @Nullable final Class mappableObject, final
@@ -86,7 +89,12 @@ public class DPDObject {
                         } else {
                             arrayValue = jsonString;
                         }
-                        callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                        try {
+                            callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callBack.onFailure(null, null, e);
+                        }
                     }
 
                     @Override
@@ -111,7 +119,12 @@ public class DPDObject {
                         } else {
                             arrayValue = jsonString;
                         }
-                        callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                        try {
+                            callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callBack.onFailure(null, null, e);
+                        }
                     }
 
                     @Override

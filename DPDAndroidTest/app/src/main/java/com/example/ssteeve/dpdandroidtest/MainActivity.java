@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loadStroe() {
-        DPDQuery query = new DPDQuery(QueryCondition.EQUAL, null, null, null, "name", "Best Buy", null);
-        query.findMappableObject("store", Store.class, new MappableResponseCallBack() {
+        DPDQuery query = new DPDQuery(QueryCondition.LESS_THAN, null, null, null, "zip", "60012", null);
+        query.findMappableObject("stores", Store.class, new MappableResponseCallBack() {
             @Override
             public void onResponse(List<DPDObject> response) {
                 Log.d(this.getClass().getSimpleName(), "response");

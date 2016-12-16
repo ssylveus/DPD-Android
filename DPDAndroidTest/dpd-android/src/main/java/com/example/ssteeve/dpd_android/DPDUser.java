@@ -5,10 +5,12 @@ import android.util.Log;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,8 @@ import okhttp3.Response;
 /**
  * Created by ssteeve on 11/20/16.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DPDUser extends DPDObject {
     private static DPDUser ourInstance = new DPDUser();
     private static String sAccessTokenEndpoint = "accesstoken";
@@ -51,7 +55,7 @@ public class DPDUser extends DPDObject {
         this.password = password;
     }
 
-    public static DPDUser currentUser(Class mapper) {
+    public static DPDUser currentUser(Class mapper) throws IOException {
         String jsonString = DPDHelper.getObjFromSharedPreference(DPDConstants.SHARED_PREFS_USER_KEY);
          return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
     }
@@ -76,6 +80,7 @@ public class DPDUser extends DPDObject {
                     login(endPoint + "/login", username, password, mappableObject, callBack);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    callBack.onFailure(null, null, e);
                 }
             }
 
@@ -107,6 +112,7 @@ public class DPDUser extends DPDObject {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    callBack.onFailure(null, null, e);
                 }
             }
 
@@ -147,7 +153,12 @@ public class DPDUser extends DPDObject {
                         arrayValue = userObj.toString().toString();
                     }
                     saveUserObjectToSharedPreference(arrayValue);
-                    callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                    try {
+                        callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        callBack.onFailure(null, null, e);
+                    }
                 }
 
             }

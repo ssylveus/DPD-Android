@@ -2,10 +2,13 @@ package com.example.ssteeve.dpdandroidtest;
 
 import com.example.ssteeve.dpd_android.DPDObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by ssteeve on 11/1/16.
  */
+
+
 public class Store extends DPDObject {
 
     private String city;
