@@ -16,8 +16,8 @@ ext {
     bintrayName = 'DPD-Android'
 
     publishedGroupId = 'com.ssylveus.dpd-android'
-    libraryName = 'dpd-android'
-    artifact = 'deployd-android'
+    libraryName = 'DPD-Android'
+    artifact = 'dpd-android'
 
     libraryDescription = 'A wrapper for communicating with deployd on Android'
 
