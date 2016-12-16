@@ -12,6 +12,6 @@ import okhttp3.Response;
  * Created by ssteeve on 11/2/16.
  */
 public interface RequestCallBack {
-    public void onResponse(String jsonString) throws Exception;
-    public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e);
+     void onResponse(String jsonString) throws Exception;
+     void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e);
 }
