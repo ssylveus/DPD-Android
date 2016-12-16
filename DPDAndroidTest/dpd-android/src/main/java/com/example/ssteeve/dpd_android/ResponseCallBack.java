@@ -1,5 +1,6 @@
 package com.example.ssteeve.dpd_android;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -7,5 +8,5 @@ import okhttp3.Response;
  */
 public interface ResponseCallBack {
     public void onResponse(String response);
-    public void onFailure(Response response);
+    public void onFailure(Call call, Response response, Exception e);
 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 
@@ -43,8 +44,8 @@ public class DPDQuery {
             }
 
             @Override
-            public void onFailure(Response response) {
-                callBack.onFailure(response);
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
             }
         });
     }
@@ -65,9 +66,10 @@ public class DPDQuery {
             }
 
             @Override
-            public void onFailure(Response response) {
-                callBack.onFailure(response);
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
             }
+
         });
     }
 

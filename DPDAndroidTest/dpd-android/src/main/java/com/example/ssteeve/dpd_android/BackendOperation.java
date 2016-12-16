@@ -40,6 +40,11 @@ public class BackendOperation {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                try {
+                    requestCallBack.onFailure(call, null, e);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
 
             @Override
@@ -51,7 +56,11 @@ public class BackendOperation {
                            refreshAccessToken();
                        }
                     } else {
-                        requestCallBack.onFailure(response);
+                        try {
+                            requestCallBack.onFailure(null, response, null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     throw new IOException("Unexpected code " + response);
@@ -59,8 +68,9 @@ public class BackendOperation {
                     String jsonString = response.body().string();
                     try {
                         requestCallBack.onResponse(jsonString);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        throw new IOException("Invalid Response " + response);
                     }
                 }
             }

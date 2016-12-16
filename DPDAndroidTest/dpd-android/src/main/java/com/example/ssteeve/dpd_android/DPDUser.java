@@ -1,5 +1,6 @@
 package com.example.ssteeve.dpd_android;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -78,8 +80,8 @@ public class DPDUser extends DPDObject {
             }
 
             @Override
-            public void onFailure(Response response) {
-                Log.d("DPDUser", "Failed to create user");
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
             }
         });
     }
@@ -109,8 +111,8 @@ public class DPDUser extends DPDObject {
             }
 
             @Override
-            public void onFailure(Response response) {
-                Log.d("DPDUser", "Failed to login");
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
             }
         });
 
@@ -151,9 +153,10 @@ public class DPDUser extends DPDObject {
             }
 
             @Override
-            public void onFailure(Response response) {
-                Log.d("DPDUser", "Failed to get access token");
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
             }
+
         });
 
     }

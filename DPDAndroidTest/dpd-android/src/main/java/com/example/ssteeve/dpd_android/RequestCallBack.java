@@ -1,13 +1,17 @@
 package com.example.ssteeve.dpd_android;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import org.json.JSONException;
 
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
  * Created by ssteeve on 11/2/16.
  */
 public interface RequestCallBack {
-    public void onResponse(String jsonString) throws JSONException;
-    public void onFailure(Response response);
+    public void onResponse(String jsonString) throws Exception;
+    public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e);
 }
