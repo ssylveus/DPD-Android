@@ -6,13 +6,13 @@ package com.example.ssteeve.dpd_android;
 public class DPDConstants {
 
     protected static String sRootUrl = "";
-
-    public static final String USER_END_POINT = "users";
-    public static final String SESSION_END_POINT = "session";
-    public static final String ACCESS_TOKEN_END_POINT = "accesstoken";
+    protected static boolean sSupportAccessToken;
+    protected static String sAccessTokenEndPoint;
+    protected static boolean sSupportRefreshToken;
+    protected static String sRefreshTokenEndPoint;
+    protected static Integer sExpiredAccessTokenErrorCode;
 
     public static final String SHARED_PREFS_USER_KEY = "CurrentUser";
-    public static final String DPDUSER_SHARED_PREFERENCE_KEY = "dpdUseSharedPreference";
     public static final String ACESS_TOKEN_SHARED_PREFERENCE_KEY = "accessToken";
     public static final String SESSION_ID_SHARED_PREFERENCE_KEY = "sessionId";
     public static final String SESSION_TOKEN_SHARED_PREFERENCE_KEY = "sessionToken";

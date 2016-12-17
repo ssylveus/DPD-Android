@@ -11,7 +11,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -23,7 +22,7 @@ public class BackendOperation {
     RequestCallBack mRequestCallBack;
     String mRootUrl;
     Request.Builder mRequestBuilder;
-    final String REFRESH_ACCESS_TOKEN_ENDPOINT = "refreshaccesstoken";
+
     private final String ACCESS_TOKEN_KEY = "accessToken";
 
     public BackendOperation(String rootUrl, Request request, Request.Builder builder, RequestCallBack requestCallBack) {
@@ -50,7 +49,7 @@ public class BackendOperation {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()) {
-                    if (response.code() == ErrorCodes.EXPIRED_ACCESSTOKEN) {
+                    if (DPDConstants.sExpiredAccessTokenErrorCode != null && response.code() == ErrorCodes.EXPIRED_ACCESSTOKEN) {
                         DPDHelper.sOperationQueue.add(BackendOperation.this);
                        if (!DPDHelper.mIsRefreshingAccessToken) {
                            refreshAccessToken();
@@ -80,7 +79,7 @@ public class BackendOperation {
     void refreshAccessToken() {
         DPDHelper.mIsRefreshingAccessToken = true;
 
-        String url = mRootUrl + REFRESH_ACCESS_TOKEN_ENDPOINT;
+        String url = mRootUrl + DPDConstants.sRefreshTokenEndPoint;
 
         Request.Builder requestBuilder = new Request.Builder();
         requestBuilder.addHeader("Content-Type", "application/json");

@@ -1,5 +1,7 @@
 package com.example.ssteeve.dpd_android;
 
+import android.content.SharedPreferences;
+
 /**
  * Created by ssteeve on 12/12/16.
  */
@@ -65,5 +67,14 @@ public class DPDCredentials {
     public void setSessionToken(String sessionToken) {
         mSessionToken = sessionToken;
         DPDHelper.saveObjToSharedPreference(sessionToken, DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+    }
+
+    public static void clear() {
+        SharedPreferences.Editor editor = DPDClient.getInstance().getSharedPreferences().edit();
+        editor.remove(DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
+        editor.remove(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
+        editor.remove(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
+        editor.remove(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+        editor.apply();
     }
 }

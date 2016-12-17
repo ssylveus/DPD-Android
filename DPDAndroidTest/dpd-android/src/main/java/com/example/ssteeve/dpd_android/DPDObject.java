@@ -4,7 +4,9 @@ import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,20 +23,22 @@ import okhttp3.Response;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DPDObject {
 
-    @JsonProperty("id")
-    public String objectId = null;
-    public Long createdAt = null;
-    public Long updatedAt = null;
+    private String objectId = null;
+    private Long createdAt = null;
+    private Long updatedAt = null;
 
     public String getObjectId() {
         return objectId;
     }
 
+    @JsonSetter("id")
     public void setObjectId(String objectId) {
         this.objectId = objectId;
     }
+
 
     public Long getCreatedAt() {
         return createdAt;
@@ -109,7 +113,7 @@ public class DPDObject {
     public void updateObject(String endPoint, final Class mappableObject, final
     MappableResponseCallBack callBack) {
         String jsonString = toJsonString();
-        DPDRequest.makeRequest(endPoint, null, HTTPMethod.POST, jsonString, null, mappableObject, new
+        DPDRequest.makeRequest(endPoint + "/" + objectId, null, HTTPMethod.PUT, jsonString, null, mappableObject, new
                 RequestCallBack() {
                     @Override
                     public void onResponse(String jsonString) {

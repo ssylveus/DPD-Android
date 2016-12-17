@@ -9,9 +9,11 @@ import com.example.ssteeve.dpd_android.DPDQuery;
 import com.example.ssteeve.dpd_android.DPDUser;
 import com.example.ssteeve.dpd_android.MappableResponseCallBack;
 import com.example.ssteeve.dpd_android.QueryCondition;
+import com.example.ssteeve.dpd_android.ResponseCallBack;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +31,36 @@ public class MainActivity extends AppCompatActivity {
 
         //login();
 
-        loadStroe();
+        //createUser();
+
+        //updateUser();
+
+        //logout();
+
+        getConversations();
+    }
+
+    void getConversations() {
+        DPDQuery query = new DPDQuery(QueryCondition.NONE, null, null, null, null, null, null);
+        query.findObject("conversations", new ResponseCallBack() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("yay", response.toString());
+            }
+
+            @Override
+            public void onFailure(Call call, Response response, Exception e) {
+
+            }
+
+
+
+        });
     }
 
     void login() {
         try {
-            DPDUser.login("userss" + "/login", "steevensylveus@gmail.com", "mvbe26", User.class, new MappableResponseCallBack() {
+            DPDUser.login("users", "steevensylveus@gmail.com", "mvbe26", User.class, new MappableResponseCallBack() {
                 @Override
                 public void onResponse(List<DPDObject> response) {
                     if (response != null) {
@@ -53,6 +79,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    void createUser() {
+        try {
+            DPDUser.createUser("users", "dpdAndroid", "dpdAndroi", User.class, new MappableResponseCallBack() {
+                @Override
+                public void onResponse(List<DPDObject> response) {
+                    Log.d(this.getClass().getSimpleName(), "User created successfully");
+                }
+
+                @Override
+                public void onFailure(Call call, Response response, Exception e) {
+                    Log.d(this.getClass().getSimpleName(), "Failed to create user");
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void updateUser() {
+        try {
+            User user = (User) DPDUser.getInstance().currentUser(User.class);
+            user.firstName = "John";
+            user.lastName = "Doe";
+
+            user.updateObject("users", User.class, new MappableResponseCallBack() {
+                @Override
+                public void onResponse(List<DPDObject> response) {
+                    Log.d(this.getClass().getSimpleName(), "User updated successfully");
+                }
+
+                @Override
+                public void onFailure(Call call, Response response, Exception e) {
+                    Log.d(this.getClass().getSimpleName(), "Failed to update user");
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     void loadStroe() {
         DPDQuery query = new DPDQuery(QueryCondition.LESS_THAN, null, null, null, "zip", "60012", null);
         query.findMappableObject("stores", Store.class, new MappableResponseCallBack() {
@@ -66,6 +134,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(this.getClass().getSimpleName(), "error occured");
             }
 
+        });
+    }
+
+    void logout() {
+        DPDUser.logout("users", new ResponseCallBack() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(this.getClass().getSimpleName(), response);
+            }
+
+            @Override
+            public void onFailure(Call call, Response response, Exception e) {
+                Log.d(this.getClass().getSimpleName(), "Failed to logout");
+            }
         });
     }
 

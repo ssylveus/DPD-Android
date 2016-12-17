@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +25,9 @@ import okhttp3.Response;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DPDUser extends DPDObject {
     private static DPDUser ourInstance = new DPDUser();
-    private static String sAccessTokenEndpoint = "accesstoken";
 
     public static DPDUser getInstance() {
         return ourInstance;
@@ -99,7 +100,7 @@ public class DPDUser extends DPDObject {
         jsonObject.put("username", username);
         jsonObject.put("password", password);
 
-        DPDRequest.makeRequest(endPoint, null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+        DPDRequest.makeRequest(endPoint + "/" + "login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
 
             @Override
             public void onResponse(String jsonString) {
@@ -108,7 +109,22 @@ public class DPDUser extends DPDObject {
                     if (jsonObject.has("id")) {
                         String sessionToken = jsonObject.getString("id");
                         DPDCredentials.getInstance().setSessionId(sessionToken);
-                        retrieveAccessToken(sAccessTokenEndpoint, mappableObject, callBack);
+
+                        if (DPDConstants.sSupportAccessToken && DPDConstants.sAccessTokenEndPoint != null) {
+                            retrieveAccessToken(DPDConstants.sAccessTokenEndPoint, mappableObject, callBack);
+                        } else {
+                            DPDUser user = new DPDUser();
+                            user.setObjectId(jsonObject.getString("uid"));
+                            String arrayValue = "[" + user.toJsonString() + "]"; //Converting jsonObject to JsonArray
+                            saveUserObjectToSharedPreference(arrayValue);
+                            try {
+                                callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                callBack.onFailure(null, null, e);
+                            }
+                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -122,6 +138,10 @@ public class DPDUser extends DPDObject {
             }
         });
 
+    }
+
+    public void updateUser(String endPoint, Class mappableObject,  MappableResponseCallBack responseCallBack) {
+        updateObject(endPoint, mappableObject, responseCallBack);
     }
 
     static private void retrieveAccessToken(String endPoint,
@@ -170,6 +190,34 @@ public class DPDUser extends DPDObject {
 
         });
 
+    }
+
+    static public void logout(String endpoint, final ResponseCallBack callBack) {
+        if (DPDCredentials.getInstance().getSessionId() != null) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("Cookie", DPDCredentials.getInstance().getSessionId());
+                DPDRequest.makeRequest(endpoint + "/" + "logout", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+
+                    @Override
+                    public void onResponse(String jsonString) throws Exception {
+                        callBack.onResponse("Successful logout");
+                    }
+
+                    @Override
+                    public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                        callBack.onFailure(null, null, new Exception("Failed to logout"));
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            callBack.onFailure(null, null, new Exception("No active session. Could not logout."));
+        }
+
+        DPDCredentials.clear();
     }
 }
 
