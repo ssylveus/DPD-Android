@@ -281,3 +281,15 @@ dependencies {
     compile 'com.ssylveus.dpd-android:dpd-android:0.90.6'
 }
 ```
+
+# Note
+If you are getting the following error when running your application due to jackson 'Duplicate files copied in APK META-INF/LICENSE' add the followig to gradle inside android method.
+
+```java
+android {
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
+}
+
+```
