@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createStore();
-        //loadStrore();
+        //loadStore();
     }
 
     void createStore() {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void loadStrore() {
+    void loadStore() {
         DPDQuery query = new DPDQuery(QueryCondition.EQUAL, null, null, null, "name", "Best Buy", null);
         query.findMappableObject("stores", Store.class, new MappableResponseCallBack() {
             @Override
