@@ -78,7 +78,7 @@ public class DPDUser extends DPDObject {
             @Override
             public void onResponse(String jsonString) {
                 try {
-                    login(endPoint + "/login", username, password, mappableObject, callBack);
+                    login(endPoint, username, password, mappableObject, callBack);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure(null, null, e);

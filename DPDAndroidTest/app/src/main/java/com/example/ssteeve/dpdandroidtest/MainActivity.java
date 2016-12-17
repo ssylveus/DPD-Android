@@ -37,26 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         //logout();
 
-        getConversations();
     }
 
-    void getConversations() {
-        DPDQuery query = new DPDQuery(QueryCondition.NONE, null, null, null, null, null, null);
-        query.findObject("conversations", new ResponseCallBack() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("yay", response.toString());
-            }
-
-            @Override
-            public void onFailure(Call call, Response response, Exception e) {
-
-            }
-
-
-
-        });
-    }
 
     void login() {
         try {
