@@ -1,6 +1,6 @@
 # DPD-Android
 Deployd is a tool that makes building APIs simple by providing important ready-made functionality out of the box that meet the demands of complex applications (http://deployd.com).
-DPD-Android is an android library, that helps facilitate the use of Deployd for android Development.
+DPD-Android is an android library, that helps facilitate the use of Deployd for Android Development.
 
 #Features
 - DPDObject
