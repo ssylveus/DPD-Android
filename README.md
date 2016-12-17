@@ -15,6 +15,28 @@ DPD-Android is an android library, that helps facilitate the use of Deployd for 
 
 - Assuming we have a collection on Deployd called Stores.  We can access the store collection as follow.
 
+- Using DPDClient
+
+```java
+//========================== Inside your application class ====================
+
+public class DPDApplication extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //root url is the deployd application url. replace with your own url
+        //DPD-Android also support OAuth.  if you have accesstoken and refresh token resources 
+        //you can use the following newInstance method
+        //DPDClient.newInstance(getApplicationContext(), "http://10.0.0.0:2403/", true, "accesstoken", true, "refreshaccesstoken", 433);
+        
+        DPDClient.newInstance(getApplicationContext(), "http://10.0.0.0:2403/"); 
+    }
+}
+
+```
+
 - Using DPDObject
 
 ```java
