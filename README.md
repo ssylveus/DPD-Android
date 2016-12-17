@@ -10,7 +10,7 @@ DPD-Android is an android library, that helps facilitate the use of Deployd for 
 - DPDCLient
 
 #The Basics
-- DPDSwift Uses Jackson Library for object mapping. More information can be found here.  
+- DPD-Android Uses Jackson Library for object mapping. More information can be found here.  
 -https://github.com/FasterXML/jackson-core
 
 - Assuming we have a collection on Deployd called Stores.  We can access the store collection as follows.
