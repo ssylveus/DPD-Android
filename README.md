@@ -13,7 +13,7 @@ DPD-Android is an android library, that helps facilitate the use of Deployd for 
 - DPDSwift Uses Jackson Library for object mapping. More information can be found here.  
 -https://github.com/FasterXML/jackson-core
 
-- Assuming we have a collection on Deployd called Stores.  We can access the store collection as follow.
+- Assuming we have a collection on Deployd called Stores.  We can access the store collection as follows.
 
 - Using DPDClient
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         createStore();
-        //loadStroe();
+        //loadStrore();
     }
 
     void createStore() {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void loadStroe() {
+    void loadStrore() {
         DPDQuery query = new DPDQuery(QueryCondition.EQUAL, null, null, null, "name", "Best Buy", null);
         query.findMappableObject("stores", Store.class, new MappableResponseCallBack() {
             @Override
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
     void createUser() {
         try {
-            DPDUser.createUser("users", "dpd-android", "dpd-androi", User.class, new MappableResponseCallBack() {
+            DPDUser.createUser("users", "dpd-android", "dpd-android", User.class, new MappableResponseCallBack() {
                 @Override
                 public void onResponse(List<DPDObject> response) {
                     Log.d(this.getClass().getSimpleName(), "User created successfully");
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
     void login() {
         try {
-            DPDUser.login("users", "steevensylveus@gmail.com", "mvbe26", User.class, new MappableResponseCallBack() {
+            DPDUser.login("users", "dpd-android@gmail.com", "dpdandroid", User.class, new MappableResponseCallBack() {
                 @Override
                 public void onResponse(List<DPDObject> response) {
                     if (response != null) {
