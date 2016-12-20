@@ -58,7 +58,11 @@ public class DPDUser extends DPDObject {
 
     public static DPDUser currentUser(Class mapper) throws IOException {
         String jsonString = DPDHelper.getObjFromSharedPreference(DPDConstants.SHARED_PREFS_USER_KEY);
-         return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
+        if (jsonString != null) {
+            return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
+        }
+
+        return null;
     }
 
     static void saveUserObjectToSharedPreference(String jsonString) {
