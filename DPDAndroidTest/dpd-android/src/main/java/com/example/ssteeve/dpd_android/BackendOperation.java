@@ -1,5 +1,7 @@
 package com.example.ssteeve.dpd_android;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -47,29 +49,49 @@ public class BackendOperation {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful()) {
-                    if (DPDConstants.sExpiredAccessTokenErrorCode != null && response.code() == ErrorCodes.EXPIRED_ACCESSTOKEN) {
-                        DPDHelper.sOperationQueue.add(BackendOperation.this);
-                       if (!DPDHelper.mIsRefreshingAccessToken) {
-                           refreshAccessToken();
-                       }
-                    } else {
-                        try {
-                            requestCallBack.onFailure(null, response, null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    throw new IOException("Unexpected code " + response);
-                } else {
-                    String jsonString = response.body().string();
+            public void onResponse(final Call call, final Response response)  {
+                if (response.isSuccessful()) {
+                    String jsonString = null;
                     try {
-                        requestCallBack.onResponse(jsonString);
+                        jsonString = response.body().string();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        throw new IOException("Invalid Response " + response);
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                requestCallBack.onFailure(call, response, null);
+                            }
+                        });
+
+                    }
+
+                    final String finalJsonString = jsonString;
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                requestCallBack.onResponse(finalJsonString);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                requestCallBack.onFailure(call, response, e);
+                            }
+                        }
+                    });
+
+                } else {
+                    if (DPDConstants.sExpiredAccessTokenErrorCode != null && response.code() == ErrorCodes.EXPIRED_ACCESSTOKEN) {
+                        DPDHelper.sOperationQueue.add(BackendOperation.this);
+                        if (!DPDHelper.mIsRefreshingAccessToken) {
+                            refreshAccessToken();
+                        }
+                    } else {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                requestCallBack.onFailure(null, response, null);
+                            }
+                        });
+
                     }
                 }
             }
@@ -95,9 +117,15 @@ public class BackendOperation {
 
         OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
+                try {
+                    mRequestCallBack.onFailure(call, null, e);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
             }
 
             @Override
@@ -117,6 +145,7 @@ public class BackendOperation {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        throw new IOException("Invalid Response " + response);
                     }
                 }
             }
