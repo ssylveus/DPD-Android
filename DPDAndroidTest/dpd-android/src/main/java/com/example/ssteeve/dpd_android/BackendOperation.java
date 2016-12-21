@@ -129,9 +129,14 @@ public class BackendOperation {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(final Call call, final Response response) throws IOException {
                 if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRequestCallBack.onFailure(call, response, new Exception("Failed to renew access token"));
+                        }
+                    });
                 } else {
                     String jsonString = response.body().string();
                     JSONObject jsonObject = null;
