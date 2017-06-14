@@ -56,11 +56,23 @@ public class DPDRequest {
 
 
         Request request;
-        if (method == HTTPMethod.POST || method == HTTPMethod.PUT) {
-            RequestBody body = RequestBody.create(JSON, jsonBody);
+        RequestBody body = RequestBody.create(JSON, jsonBody != null ? jsonBody : "");
+
+        if (method == HTTPMethod.POST) {
+
             request = requestBuilder
                     .url(url)
                     .post(body)
+                    .build();
+        } else if(method == HTTPMethod.PUT) {
+            request = requestBuilder
+                    .url(url)
+                    .put(body)
+                    .build();
+        } else if (method == HTTPMethod.DELETE) {
+            request = requestBuilder
+                    .url(url)
+                    .delete(body)
                     .build();
         } else {
             request = requestBuilder
