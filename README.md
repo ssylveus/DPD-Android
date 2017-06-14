@@ -278,7 +278,7 @@ DPD-Android can be added to your project using gradle
 
 ```java
 dependencies {
-    compile 'com.ssylveus.dpd-android:dpd-android:0.90.9'
+    compile 'com.ssylveus.dpd-android:dpd-android:0.90.10'
 }
 ```
 
