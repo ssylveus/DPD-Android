@@ -119,6 +119,8 @@ public class DPDQuery {
             mQueryInfo.putAll(processOr());
         } else if (mQueryCondition.equals(QueryCondition.AND)) {
             mQueryInfo.putAll(processAnd());
+        } else if (mQueryCondition.equals(QueryCondition.GENERIC)) {
+            mQueryInfo.putAll((Map<? extends String, ?>) mQueryFieldValue);
         } else {
             mQueryInfo.putAll(processEqualTo());
         }

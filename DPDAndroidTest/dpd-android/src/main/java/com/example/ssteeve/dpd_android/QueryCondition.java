@@ -15,6 +15,7 @@ public class QueryCondition {
     public static final Integer OR = 8;
     public static final Integer NONE = 9;
     public static final Integer AND = 10;
+    public static final Integer GENERIC = 11;
 
     private QueryCondition() { }
 }
