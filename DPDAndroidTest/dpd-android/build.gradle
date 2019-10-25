@@ -24,7 +24,7 @@ ext {
     siteUrl = 'https://github.com/ssylveus/DPD-Android'
     gitUrl = 'https://github.com/ssylveus/DPD-Android.git'
 
-    libraryVersion = '0.90.15'
+    libraryVersion = '0.90.16'
 
     developerId = 'ssylveus'
     developerName = 'Steeven Sylveus'
@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
