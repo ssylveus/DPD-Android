@@ -14,8 +14,6 @@ public class DPDAplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //DPDClient.newInstance(getApplicationContext(), "http://10.0.0.90:2403/");
-
-        DPDClient.newInstance(getApplicationContext(), "https://usicians.com/", true, "accesstoken", true, "refreshaccesstoken", 433);
+        DPDClient.newInstance(getApplicationContext(), "http://localhost:2403/");
     }
 }

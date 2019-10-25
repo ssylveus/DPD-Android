@@ -82,7 +82,7 @@ public class DPDUser extends DPDObject {
             @Override
             public void onResponse(String jsonString) {
                 try {
-                    login(username, password, mappableObject, callBack);
+                    login(endPoint, username, password, mappableObject, callBack);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     callBack.onFailure(null, null, e);
@@ -96,7 +96,7 @@ public class DPDUser extends DPDObject {
         });
     }
 
-    static public void login(String username,
+    static public void login(final String endPoint, String username,
                              final String password, final Class mappableObject,
                              final MappableResponseCallBack callBack) throws JSONException {
 
@@ -104,7 +104,7 @@ public class DPDUser extends DPDObject {
         jsonObject.put("username", username);
         jsonObject.put("password", password);
 
-        DPDRequest.makeRequest("login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+        DPDRequest.makeRequest(endPoint + "/" + "login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
 
             @Override
             public void onResponse(String jsonString) {
@@ -117,16 +117,8 @@ public class DPDUser extends DPDObject {
                         if (DPDConstants.sSupportAccessToken && DPDConstants.sAccessTokenEndPoint != null) {
                             retrieveAccessToken(DPDConstants.sAccessTokenEndPoint, mappableObject, callBack);
                         } else {
-                            DPDUser user = new DPDUser();
-                            user.setObjectId(jsonObject.getString("uid"));
-                            String arrayValue = "[" + user.toJsonString() + "]"; //Converting jsonObject to JsonArray
-                            saveUserObjectToSharedPreference(arrayValue);
-                            try {
-                                callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                callBack.onFailure(null, null, e);
-                            }
+                            String userId = jsonObject.getString("uid");
+                            getUser(endPoint, userId, mappableObject, callBack);
                         }
 
                     }
@@ -144,13 +136,36 @@ public class DPDUser extends DPDObject {
 
     }
 
-    public void updateUser(String endPoint, Class mappableObject,  MappableResponseCallBack responseCallBack) {
+    static public void getUser(final String endPoint, final String userId, final Class mappableObject, final MappableResponseCallBack callBack) throws JSONException {
+        DPDRequest.makeRequest(endPoint + "/" + userId, null, HTTPMethod.GET, null, null, null, new RequestCallBack() {
+
+            @Override
+            public void onResponse(String jsonString) {
+                String arrayValue = "[" + jsonString + "]"; //Converting jsonObject to JsonArray
+                saveUserObjectToSharedPreference(arrayValue);
+
+                try {
+                    callBack.onResponse(DPDObject.convertToMNObject(arrayValue, mappableObject));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    callBack.onFailure(null, null, e);
+                }
+            }
+
+            @Override
+            public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                callBack.onFailure(call, response, e);
+            }
+        });
+    }
+
+    public void updateUser(String endPoint, Class mappableObject, MappableResponseCallBack responseCallBack) {
         updateObject(endPoint, mappableObject, responseCallBack);
     }
 
     static private void retrieveAccessToken(String endPoint,
-                                     final Class mappableObject,
-                                     final MappableResponseCallBack callBack) {
+                                            final Class mappableObject,
+                                            final MappableResponseCallBack callBack) {
 
         DPDRequest.makeRequest(endPoint, null, HTTPMethod.GET, null, null, mappableObject, new RequestCallBack() {
 

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //login();
+        login();
 
         //createUser();
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     void login() {
         try {
-            DPDUser.login("users", "steevensylveus@gmail.com", "mvbe26", User.class, new MappableResponseCallBack() {
+            DPDUser.login("users", "dpd-android", "dpd-android", User.class, new MappableResponseCallBack() {
                 @Override
                 public void onResponse(List<DPDObject> response) {
                     if (response != null) {
