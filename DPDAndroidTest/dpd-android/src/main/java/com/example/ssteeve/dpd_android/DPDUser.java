@@ -104,7 +104,7 @@ public class DPDUser extends DPDObject {
         jsonObject.put("username", username);
         jsonObject.put("password", password);
 
-        DPDRequest.makeRequest("/login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+        DPDRequest.makeRequest("login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
 
             @Override
             public void onResponse(String jsonString) {
