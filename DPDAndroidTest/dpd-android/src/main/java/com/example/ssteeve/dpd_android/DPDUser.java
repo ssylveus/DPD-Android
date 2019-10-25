@@ -96,7 +96,7 @@ public class DPDUser extends DPDObject {
         });
     }
 
-    static public void login(final String endPoint, String username,
+    static public void login(String username,
                              final String password, final Class mappableObject,
                              final MappableResponseCallBack callBack) throws JSONException {
 
@@ -104,7 +104,7 @@ public class DPDUser extends DPDObject {
         jsonObject.put("username", username);
         jsonObject.put("password", password);
 
-        DPDRequest.makeRequest(endPoint, null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+        DPDRequest.makeRequest("/login", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
 
             @Override
             public void onResponse(String jsonString) {
