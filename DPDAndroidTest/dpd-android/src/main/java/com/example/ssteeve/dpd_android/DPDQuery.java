@@ -24,6 +24,16 @@ public class DPDQuery {
     private String mSortField = null;
     private Map<String, Object> mQueryInfo = new HashMap<>();
 
+    public DPDQuery() {
+        mQueryCondition = QueryCondition.NONE;
+        mSortingOrder = OrderType.ASCENDING;
+        mLimit = null;
+        mSkip = null;
+        mQueryField = null;
+        mQueryFieldValue = null;
+        mSortField = null;
+    }
+
     public DPDQuery(Integer queryCondition, Integer sortingOrder, Integer limit, Integer skip, String queryField,
                     Object queryFieldValue, String sortField) {
         mQueryCondition = queryCondition;
@@ -33,6 +43,41 @@ public class DPDQuery {
         this.mQueryField = queryField;
         this.mQueryFieldValue = queryFieldValue;
         this.mSortField = sortField;
+    }
+
+    public DPDQuery setQueryCondition(Integer mQueryCondition) {
+        this.mQueryCondition = mQueryCondition;
+        return this;
+    }
+
+    public DPDQuery setSortingOrder(Integer mSortingOrder) {
+        this.mSortingOrder = mSortingOrder;
+        return this;
+    }
+
+    public DPDQuery setLimit(Integer mLimit) {
+        this.mLimit = mLimit;
+        return this;
+    }
+
+    public DPDQuery setSkip(Integer mSkip) {
+        this.mSkip = mSkip;
+        return this;
+    }
+
+    public DPDQuery setQueryField(String mQueryField) {
+        this.mQueryField = mQueryField;
+        return this;
+    }
+
+    public DPDQuery setQueryFieldValue(Object mQueryFieldValue) {
+        this.mQueryFieldValue = mQueryFieldValue;
+        return this;
+    }
+
+    public DPDQuery setSortField(String mSortField) {
+        this.mSortField = mSortField;
+        return this;
     }
 
     public void findObject(String endPoint, final ResponseCallBack callBack) {
