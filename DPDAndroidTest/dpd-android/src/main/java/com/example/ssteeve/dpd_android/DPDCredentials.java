@@ -22,43 +22,43 @@ public class DPDCredentials {
 
     public String getAccessToken() {
         if (mAccessToken == null)
-            return DPDHelper.getObjFromKeyStore(DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObject(DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
 
         return mAccessToken;
     }
 
     public void setAccessToken(String accessToken) {
         mAccessToken = accessToken;
-        DPDHelper.saveObjToKeyStore(accessToken, DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
+        DPDHelper.saveObject(accessToken, DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
     }
 
     public String getSessionId() {
         if (mSessionId == null)
-            return DPDHelper.getObjFromKeyStore(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObject(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
 
         return mSessionId;
     }
 
     public void setSessionId(String sessionId) {
         mSessionId = "sid=" + sessionId;
-        DPDHelper.saveObjToKeyStore(mSessionId, DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
+        DPDHelper.saveObject(mSessionId, DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
     }
 
     public String getInstallationId() {
         if (mInstallationId == null)
-            return DPDHelper.getObjFromKeyStore(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObject(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
 
         return mInstallationId;
     }
 
     public void setInstallationId(String installationId) {
         mInstallationId = installationId;
-        DPDHelper.saveObjToKeyStore(installationId, DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
+        DPDHelper.saveObject(installationId, DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
     }
 
     public String getSessionToken() {
         if (mSessionToken == null)
-            return DPDHelper.getObjFromKeyStore(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObject(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
 
         return mSessionToken;
 
@@ -66,7 +66,7 @@ public class DPDCredentials {
 
     public void setSessionToken(String sessionToken) {
         mSessionToken = sessionToken;
-        DPDHelper.saveObjToKeyStore(sessionToken, DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+        DPDHelper.saveObject(sessionToken, DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
     }
 
     public static void clear() {

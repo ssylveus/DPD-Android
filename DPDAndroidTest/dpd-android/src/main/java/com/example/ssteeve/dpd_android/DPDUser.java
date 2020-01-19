@@ -51,7 +51,7 @@ public class DPDUser extends DPDObject {
     }
 
     public static DPDUser currentUser(Class mapper) throws IOException {
-        String jsonString = DPDHelper.getObjFromKeyStore(DPDConstants.SHARED_PREFS_USER_KEY);
+        String jsonString = DPDHelper.getSavedObject(DPDConstants.SHARED_PREFS_USER_KEY);
         if (jsonString != null) {
             return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
         }
@@ -60,7 +60,7 @@ public class DPDUser extends DPDObject {
     }
 
     static void saveUserObjectToSharedPreference(String jsonString) {
-        DPDHelper.saveObjToKeyStore(jsonString, DPDConstants.SHARED_PREFS_USER_KEY);
+        DPDHelper.saveObject(jsonString, DPDConstants.SHARED_PREFS_USER_KEY);
     }
 
     static public void createUser(final String endPoint, final String username,
