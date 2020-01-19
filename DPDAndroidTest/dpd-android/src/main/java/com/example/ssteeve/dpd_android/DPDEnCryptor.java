@@ -5,6 +5,7 @@ import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.NonNull;
+import android.util.Base64;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -27,13 +28,12 @@ class DPDEnCryptor {
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
 
-    private byte[] encryption;
-    private byte[] iv;
+    private static String IV_IDENTIFIER = "DPD_IV";
 
     DPDEnCryptor() {
     }
 
-    byte[] encryptText(final String alias, final String textToEncrypt)
+    String encryptText(final String alias, final String textToEncrypt)
             throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException,
             NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IOException,
             InvalidAlgorithmParameterException, SignatureException, BadPaddingException,
@@ -42,9 +42,14 @@ class DPDEnCryptor {
         final Cipher cipher = Cipher.getInstance(TRANSFORMATION);
         cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(alias));
 
-        iv = cipher.getIV();
+        String base64IV = Base64.encodeToString(cipher.getIV(), Base64.DEFAULT);
+        DPDHelper.saveObject(base64IV, alias + IV_IDENTIFIER);
 
-        return (encryption = cipher.doFinal(textToEncrypt.getBytes("UTF-8")));
+        try {
+            return Base64.encodeToString(cipher.doFinal(textToEncrypt.getBytes("UTF-8")), Base64.DEFAULT);
+        } catch (Exception e) {
+            return  null;
+        }
     }
 
     @NonNull
@@ -65,11 +70,7 @@ class DPDEnCryptor {
         return keyGenerator.generateKey();
     }
 
-    byte[] getEncryption() {
-        return encryption;
-    }
-
-    byte[] getIv() {
-        return iv;
+    byte[] getIv(String alias) {
+        return Base64.decode(DPDHelper.getSavedObj(alias + IV_IDENTIFIER), Base64.DEFAULT);
     }
 }

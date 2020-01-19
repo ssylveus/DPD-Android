@@ -22,7 +22,7 @@ public class DPDCredentials {
 
     public String getAccessToken() {
         if (mAccessToken == null)
-            return DPDHelper.getSavedObject(DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObj(DPDConstants.ACESS_TOKEN_SHARED_PREFERENCE_KEY);
 
         return mAccessToken;
     }
@@ -34,7 +34,7 @@ public class DPDCredentials {
 
     public String getSessionId() {
         if (mSessionId == null)
-            return DPDHelper.getSavedObject(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObj(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
 
         return mSessionId;
     }
@@ -46,7 +46,7 @@ public class DPDCredentials {
 
     public String getInstallationId() {
         if (mInstallationId == null)
-            return DPDHelper.getSavedObject(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObj(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
 
         return mInstallationId;
     }
@@ -58,7 +58,7 @@ public class DPDCredentials {
 
     public String getSessionToken() {
         if (mSessionToken == null)
-            return DPDHelper.getSavedObject(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+            return DPDHelper.getSavedObj(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
 
         return mSessionToken;
 

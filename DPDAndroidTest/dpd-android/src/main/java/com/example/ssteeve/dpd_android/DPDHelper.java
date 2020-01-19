@@ -1,11 +1,10 @@
 package com.example.ssteeve.dpd_android;
 
+import android.content.SharedPreferences;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import de.adorsys.android.securestoragelibrary.SecurePreferences;
-import de.adorsys.android.securestoragelibrary.SecureStorageException;
 
 /**
  * Created by ssteeve on 11/15/16.
@@ -18,13 +17,31 @@ public class DPDHelper {
     static void saveObject(String value, String key) {
 
         try {
-            SecurePreferences.setValue(DPDClient.getInstance().getContext(), key, value);
-        } catch (SecureStorageException e) {
+            String encryptedValue = DPDClient.getEnCryptor().encryptText(key, value);
+            if (encryptedValue != null) {
+                SharedPreferences.Editor editor = DPDClient.getInstance().getSharedPreferences().edit();
+                editor.putString(key, encryptedValue);
+                editor.apply();
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    static String getSavedObject(String key) {
-        return SecurePreferences.getStringValue(DPDClient.getInstance().getContext(), key, null);
+    static String getSavedObj(String key) {
+        if (DPDClient.getInstance().getSharedPreferences() != null && DPDClient.getInstance().getSharedPreferences().contains(key)) {
+            String encryptedValue = DPDClient.getInstance().getSharedPreferences().getString(key, "");
+
+            try {
+                String decryptedValue = DPDClient.getDeCryptor().decryptData(key, encryptedValue, DPDClient.getEnCryptor().getIv(key));
+                return decryptedValue;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 }

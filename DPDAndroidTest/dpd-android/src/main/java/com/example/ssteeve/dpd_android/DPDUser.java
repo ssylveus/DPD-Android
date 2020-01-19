@@ -51,7 +51,7 @@ public class DPDUser extends DPDObject {
     }
 
     public static DPDUser currentUser(Class mapper) throws IOException {
-        String jsonString = DPDHelper.getSavedObject(DPDConstants.SHARED_PREFS_USER_KEY);
+        String jsonString = DPDHelper.getSavedObj(DPDConstants.SHARED_PREFS_USER_KEY);
         if (jsonString != null) {
             return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
         }
