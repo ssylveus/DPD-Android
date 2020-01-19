@@ -36,8 +36,8 @@ public class DPDHelper {
 
 
     static String getSavedObj(String key) {
-        if (DPDClient.getInstance().getSharedPreferences() != null && DPDClient.getInstance().getSharedPreferences().contains(key)) {
-            String encryptedValue = DPDClient.getInstance().getSharedPreferences().getString(key, "");
+        if (getObjFromSharedPreference(key) != null) {
+            String encryptedValue = getObjFromSharedPreference(key);
 
             try {
                 String decryptedValue = DPDClient.getDeCryptor().decryptData(key, encryptedValue, DPDClient.getEnCryptor().getIv(key));
@@ -45,6 +45,15 @@ public class DPDHelper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        return null;
+    }
+
+    static String getObjFromSharedPreference(String key) {
+        if (DPDClient.getInstance().getSharedPreferences() != null && DPDClient.getInstance().getSharedPreferences().contains(key)) {
+            return DPDClient.getInstance().getSharedPreferences().getString(key, "");
+
         }
 
         return null;

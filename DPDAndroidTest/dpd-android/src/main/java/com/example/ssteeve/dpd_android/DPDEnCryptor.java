@@ -71,6 +71,6 @@ class DPDEnCryptor {
     }
 
     byte[] getIv(String alias) {
-        return Base64.decode(DPDHelper.getSavedObj(alias + IV_IDENTIFIER), Base64.DEFAULT);
+        return Base64.decode(DPDHelper.getObjFromSharedPreference(alias + IV_IDENTIFIER), Base64.DEFAULT);
     }
 }
