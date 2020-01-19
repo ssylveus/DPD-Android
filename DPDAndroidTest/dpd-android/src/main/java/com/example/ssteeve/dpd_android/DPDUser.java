@@ -1,10 +1,8 @@
 package com.example.ssteeve.dpd_android;
 
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -12,10 +10,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -57,7 +51,7 @@ public class DPDUser extends DPDObject {
     }
 
     public static DPDUser currentUser(Class mapper) throws IOException {
-        String jsonString = DPDHelper.getObjFromSharedPreference(DPDConstants.SHARED_PREFS_USER_KEY);
+        String jsonString = DPDHelper.getObjFromKeyStore(DPDConstants.SHARED_PREFS_USER_KEY);
         if (jsonString != null) {
             return (DPDUser) DPDObject.convertToMNObject(jsonString, mapper).get(0);
         }
@@ -66,7 +60,7 @@ public class DPDUser extends DPDObject {
     }
 
     static void saveUserObjectToSharedPreference(String jsonString) {
-        DPDHelper.saveObjToSharedPreference(jsonString, DPDConstants.SHARED_PREFS_USER_KEY);
+        DPDHelper.saveObjToKeyStore(jsonString, DPDConstants.SHARED_PREFS_USER_KEY);
     }
 
     static public void createUser(final String endPoint, final String username,

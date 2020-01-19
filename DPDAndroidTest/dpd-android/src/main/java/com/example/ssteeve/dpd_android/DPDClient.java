@@ -6,6 +6,11 @@ import android.preference.PreferenceManager;
 
 import com.securepreferences.SecurePreferences;
 
+import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -21,6 +26,9 @@ public class DPDClient {
     private static Context sContext;
     private static SharedPreferences sSharedPreferences;
 
+
+    private static EnCryptor enCryptor;
+    private static DeCryptor deCryptor;
 
     private DPDClient() {
     }
@@ -53,6 +61,16 @@ public class DPDClient {
         DPDClient client = new DPDClient(context, rootUrl, supportAccessToken, accessTokenEndpoint,
                 supportRefreshToken, refreshTokenEndpoint, expiredAccessTokenErrorCode);
         getInstance().initializeSecurePreference();
+
+        DPDClient.enCryptor = new EnCryptor();
+
+        try {
+            DPDClient.deCryptor = new DeCryptor();
+        } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException |
+                IOException e) {
+            e.printStackTrace();
+        }
+
         return client;
     }
 
@@ -71,5 +89,13 @@ public class DPDClient {
             sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getInstance().getContext());
 
         return sSharedPreferences;
+    }
+
+    public static EnCryptor getEnCryptor() {
+        return enCryptor;
+    }
+
+    public static DeCryptor getDeCryptor() {
+        return deCryptor;
     }
 }
