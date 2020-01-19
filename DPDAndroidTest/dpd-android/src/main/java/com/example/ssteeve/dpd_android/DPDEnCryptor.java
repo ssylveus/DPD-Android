@@ -28,7 +28,7 @@ class DPDEnCryptor {
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
 
-    private static String IV_IDENTIFIER = "DPD_IV";
+    private static String IV_IDENTIFIER = "_DPD_IV";
 
     DPDEnCryptor() {
     }
@@ -43,7 +43,7 @@ class DPDEnCryptor {
         cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(alias));
 
         String base64IV = Base64.encodeToString(cipher.getIV(), Base64.DEFAULT);
-        DPDHelper.saveObject(base64IV, alias + IV_IDENTIFIER);
+        DPDHelper.saveToSharedPreference(base64IV, alias + IV_IDENTIFIER);
 
         try {
             return Base64.encodeToString(cipher.doFinal(textToEncrypt.getBytes("UTF-8")), Base64.DEFAULT);

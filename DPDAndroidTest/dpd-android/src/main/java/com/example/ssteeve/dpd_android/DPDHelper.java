@@ -19,9 +19,7 @@ public class DPDHelper {
         try {
             String encryptedValue = DPDClient.getEnCryptor().encryptText(key, value);
             if (encryptedValue != null) {
-                SharedPreferences.Editor editor = DPDClient.getInstance().getSharedPreferences().edit();
-                editor.putString(key, encryptedValue);
-                editor.apply();
+                saveToSharedPreference(encryptedValue, key);
             }
 
         } catch (Exception e) {
@@ -29,6 +27,13 @@ public class DPDHelper {
         }
 
     }
+
+    static void saveToSharedPreference(String value, String key) {
+        SharedPreferences.Editor editor = DPDClient.getInstance().getSharedPreferences().edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
+
 
     static String getSavedObj(String key) {
         if (DPDClient.getInstance().getSharedPreferences() != null && DPDClient.getInstance().getSharedPreferences().contains(key)) {
