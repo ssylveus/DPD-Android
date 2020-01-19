@@ -24,7 +24,7 @@ ext {
     siteUrl = 'https://github.com/ssylveus/DPD-Android'
     gitUrl = 'https://github.com/ssylveus/DPD-Android.git'
 
-    libraryVersion = '0.90.20'
+    libraryVersion = '0.90.21'
 
     developerId = 'ssylveus'
     developerName = 'Steeven Sylveus'
@@ -76,3 +76,5 @@ dependencies {
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+//use ./gradlew bintrayUpload to upload to bintray

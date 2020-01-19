@@ -29,26 +29,17 @@ public class DPDHelper {
     static void saveObjToKeyStore(String value, String key) {
         try {
            DPDClient.getEnCryptor().encryptText(key, value);
-        } catch (UnrecoverableEntryException | NoSuchAlgorithmException | NoSuchProviderException |
-                KeyStoreException | IOException | NoSuchPaddingException | InvalidKeyException e) {
+        } catch (Exception e) {
             Log.e(TAG, "onClick() called with: " + e.getMessage(), e);
-        } catch (InvalidAlgorithmParameterException | SignatureException |
-                IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
         }
     }
 
     static String getObjFromKeyStore(String key) {
         try {
             return DPDClient.getDeCryptor().decryptData(key, DPDClient.getEnCryptor().getEncryption(), DPDClient.getEnCryptor().getIv());
-        } catch (UnrecoverableEntryException | NoSuchAlgorithmException |
-                KeyStoreException | NoSuchPaddingException | NoSuchProviderException |
-                IOException | InvalidKeyException e) {
+        } catch (Exception e) {
             Log.e(TAG, "decryptData() called with: " + e.getMessage(), e);
-        } catch (IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            return  null;
         }
-
-        return  null;
     }
 }

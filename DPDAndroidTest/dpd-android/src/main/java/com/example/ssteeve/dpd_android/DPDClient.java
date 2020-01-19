@@ -11,8 +11,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ssteeve on 12/12/16.
  */
@@ -27,8 +25,8 @@ public class DPDClient {
     private static SharedPreferences sSharedPreferences;
 
 
-    private static EnCryptor enCryptor;
-    private static DeCryptor deCryptor;
+    private static DPDEnCryptor enCryptor;
+    private static DPDDeCryptor deCryptor;
 
     private DPDClient() {
     }
@@ -62,10 +60,10 @@ public class DPDClient {
                 supportRefreshToken, refreshTokenEndpoint, expiredAccessTokenErrorCode);
         getInstance().initializeSecurePreference();
 
-        DPDClient.enCryptor = new EnCryptor();
+        DPDClient.enCryptor = new DPDEnCryptor();
 
         try {
-            DPDClient.deCryptor = new DeCryptor();
+            DPDClient.deCryptor = new DPDDeCryptor();
         } catch (CertificateException | NoSuchAlgorithmException | KeyStoreException |
                 IOException e) {
             e.printStackTrace();
@@ -91,11 +89,11 @@ public class DPDClient {
         return sSharedPreferences;
     }
 
-    public static EnCryptor getEnCryptor() {
+    public static DPDEnCryptor getEnCryptor() {
         return enCryptor;
     }
 
-    public static DeCryptor getDeCryptor() {
+    public static DPDDeCryptor getDeCryptor() {
         return deCryptor;
     }
 }

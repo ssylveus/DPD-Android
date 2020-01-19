@@ -22,7 +22,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-class EnCryptor {
+class DPDEnCryptor {
 
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
@@ -30,7 +30,7 @@ class EnCryptor {
     private byte[] encryption;
     private byte[] iv;
 
-    EnCryptor() {
+    DPDEnCryptor() {
     }
 
     byte[] encryptText(final String alias, final String textToEncrypt)
