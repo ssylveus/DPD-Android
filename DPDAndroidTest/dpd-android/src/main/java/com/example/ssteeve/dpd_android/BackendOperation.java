@@ -114,6 +114,7 @@ public class BackendOperation {
                     String jsonString = null;
                     try {
                         jsonString = response.body().string();
+                        Log.d("DPDRequest", "*********************** RESPONSE *********************" + jsonString);
                     } catch (Exception e) {
                         e.printStackTrace();
                         new Handler(Looper.getMainLooper()).post(new Runnable() {

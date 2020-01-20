@@ -1,6 +1,7 @@
 package com.example.ssteeve.dpd_android;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -80,6 +81,9 @@ public class DPDRequest {
                     .build();
         }
 
+        Log.d("DPDRequest", "*********************** URL *********************" + url);
+        Log.d("DPDRequest", "*********************** HEADERS *********************" + request.headers().toString());
+        Log.d("DPDRequest", "*********************** Body *********************" + request.body().toString());
         new BackendOperation(DPDConstants.sRootUrl, request, requestBuilder, requestCallBack);
     }
 }
