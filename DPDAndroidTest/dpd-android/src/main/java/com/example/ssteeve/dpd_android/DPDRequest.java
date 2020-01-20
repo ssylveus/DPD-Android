@@ -82,7 +82,9 @@ public class DPDRequest {
         }
 
         Log.d("DPDRequest", "*********************** URL *********************" + url);
-        Log.d("DPDRequest", "*********************** HEADERS *********************" + request.headers().toString());
+        if(request.body() != null) {
+            Log.d("DPDRequest", "*********************** HEADERS *********************" + request.headers().toString());
+        }
         Log.d("DPDRequest", "*********************** Body *********************" + request.body().toString());
         new BackendOperation(DPDConstants.sRootUrl, request, requestBuilder, requestCallBack);
     }
