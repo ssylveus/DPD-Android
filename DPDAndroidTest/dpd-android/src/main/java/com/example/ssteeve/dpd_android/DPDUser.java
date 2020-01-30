@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -20,7 +21,7 @@ import okhttp3.Response;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DPDUser extends DPDObject {
+public class DPDUser extends DPDObject implements Serializable {
     private static DPDUser ourInstance = new DPDUser();
 
     public static DPDUser getInstance() {

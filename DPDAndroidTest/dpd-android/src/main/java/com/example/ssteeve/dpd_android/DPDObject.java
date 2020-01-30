@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import okhttp3.Response;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DPDObject {
+public class DPDObject implements Serializable {
 
     private String objectId = null;
     private Long createdAt = null;
