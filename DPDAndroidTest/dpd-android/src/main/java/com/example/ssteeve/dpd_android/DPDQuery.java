@@ -82,7 +82,7 @@ public class DPDQuery {
 
     public void findObject(String endPoint, final ResponseCallBack callBack) {
         processQueryInfo();
-        DPDRequest.makeRequest(endPoint, null, HTTPMethod.GET, null, null, null, new RequestCallBack() {
+        DPDRequest.makeRequest(endPoint, mQueryInfo, HTTPMethod.GET, null, null, null, new RequestCallBack() {
 
             @Override
             public void onResponse(String jsonString) {
