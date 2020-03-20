@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -206,12 +208,12 @@ public class DPDUser extends DPDObject implements Serializable {
 
     }
 
-    static public void logout(String endpoint, final ResponseCallBack callBack) {
+    static public void logout(final ResponseCallBack callBack) {
         if (DPDCredentials.getInstance().getSessionId() != null) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("Cookie", DPDCredentials.getInstance().getSessionId());
-                DPDRequest.makeRequest(endpoint + "/" + "logout", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
+                DPDRequest.makeRequest("users" + "/" + "logout", null, HTTPMethod.POST, jsonObject.toString(), null, null, new RequestCallBack() {
 
                     @Override
                     public void onResponse(String jsonString) throws Exception {
@@ -224,6 +226,36 @@ public class DPDUser extends DPDObject implements Serializable {
                     }
                 });
             } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            callBack.onFailure(null, null, new Exception("No active session. Could not logout."));
+        }
+
+        DPDCredentials.clear();
+    }
+
+    static public void removeSession(String endPoint, final ResponseCallBack callBack) {
+        if (DPDCredentials.getInstance().getSessionId() != null) {
+
+            try {
+                String urlString = endPoint + "/" +  DPDCredentials.getInstance().getSessionToken();
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("sessionToken", DPDCredentials.getInstance().getSessionId());
+
+                DPDRequest.makeRequest(urlString, params, HTTPMethod.DELETE, null, null, null, new RequestCallBack() {
+                    @Override
+                    public void onResponse(String jsonString) throws JSONException, Exception {
+                        callBack.onResponse("Successful logout");
+                    }
+
+                    @Override
+                    public void onFailure(@Nullable Call call, @Nullable Response response, @Nullable Exception e) {
+                        callBack.onFailure(null, null, new Exception("Failed to logout"));
+                    }
+                });
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
