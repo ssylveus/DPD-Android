@@ -75,6 +75,7 @@ public class DPDCredentials {
         editor.remove(DPDConstants.SESSION_ID_SHARED_PREFERENCE_KEY);
         editor.remove(DPDConstants.INSTALLATION_ID_SHARED_PREFERENCE_KEY);
         editor.remove(DPDConstants.SESSION_TOKEN_SHARED_PREFERENCE_KEY);
+        editor.remove(DPDConstants.SHARED_PREFS_USER_KEY);
         editor.apply();
     }
 }

@@ -24,7 +24,7 @@ ext {
     siteUrl = 'https://github.com/ssylveus/DPD-Android'
     gitUrl = 'https://github.com/ssylveus/DPD-Android.git'
 
-    libraryVersion = '0.91.1'
+    libraryVersion = '0.91.2'
 
     developerId = 'ssylveus'
     developerName = 'Steeven Sylveus'
