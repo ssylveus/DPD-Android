@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void logout() {
-        DPDUser.logout("users", new ResponseCallBack() {
+        DPDUser.logout(new ResponseCallBack() {
             @Override
             public void onResponse(String response) {
                 Log.d(this.getClass().getSimpleName(), response);
